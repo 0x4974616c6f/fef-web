@@ -10,9 +10,8 @@ import { FiRefreshCcw } from 'react-icons/fi'
 import { setupAPIClient } from '../../services/api'
 
 import Modal from 'react-modal'
-import { ModalOrder } from '../../components/ModalOrder'
 
-type TaskProps = {
+export type TaskProps = {
     id: string
     title: string
     description: string
@@ -28,11 +27,7 @@ interface HomeProps {
 
 export default function Dashboard({ tasks }: HomeProps) {
     const [taskList, setTaskList] = useState<TaskProps[]>(tasks || [])
-    const [modalVisible, setModalVisible] = useState<boolean>(false)
 
-    function handleCloseModal() {
-        setModalVisible(false)
-    }
 
     async function handleRefreshTasks() {
         const apiClient = setupAPIClient()
@@ -40,10 +35,8 @@ export default function Dashboard({ tasks }: HomeProps) {
         const response = await apiClient.get('/tasks/all')
 
         setTaskList(response.data)
-        setModalVisible(true)
     }
 
-    Modal.setAppElement('#__next')
     return (
         <>
             <Head>
@@ -72,12 +65,13 @@ export default function Dashboard({ tasks }: HomeProps) {
     )
 }
 
+
 export const getServerSideProps = canSSRAuth(async (ctx) => {
     const apiClient = setupAPIClient(ctx)
-    const response = apiClient.get('/tasks/all')
+    const response = await apiClient.get('/tasks/all')
     return {
         props: {
-            tasks: (await response).data
+            tasks: response.data
         }
     }
 })
