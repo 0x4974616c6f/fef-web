@@ -12,6 +12,7 @@ import { setupAPIClient } from '../../services/api'
 import Modal from '../../components/modalAdd'
 import { Checkbox, FormControlLabel } from '@mui/material';
 import { Button } from '../../components/ui/Button'
+import { toast } from 'react-toastify'
 
 export type TaskProps = {
     id: string
@@ -37,6 +38,36 @@ export default function Dashboard({ tasks }: HomeProps) {
 
     const [taskList, setTaskList] = useState<TaskProps[]>(tasks || [])
     const [showModalAdd, setShowModalAdd] = useState<boolean>(false)
+
+    async function handleAddTask() {
+        // e.preventDefault()
+
+        try {
+            setLoading(true)
+            const data = new FormData()
+
+            if (titleTaskAdd === '' || descriptionTaskAdd === '') {
+                toast.error('Preencha todos os campos')
+                return
+            }
+
+            data.append('title', titleTaskAdd)
+            data.append('description', descriptionTaskAdd)
+            data.append('done', String(doneTaskAdd))
+            const apiClient = setupAPIClient()
+            await apiClient.post('/tasks', data)
+            toast.success('Tarefa adicionada com sucesso.')
+
+            setTitleTaskAdd('')
+            setDescriptionTaskAdd('')
+            setDoneTaskAdd(false)
+            setLoading(false)
+            handleCloseModalAdd()
+        } catch (err) {
+            toast.error('Ops erro ao cadastrar tarefa.')
+            setLoading(false)
+        }
+    }
 
     function handleTitleTaskAdd(event: React.ChangeEvent<HTMLInputElement>) {
         setTitleTaskAdd(event.target.value)
@@ -95,7 +126,7 @@ export default function Dashboard({ tasks }: HomeProps) {
                                     <FormControlLabel control={<Checkbox onChange={handleDoneTaskAdd} value={doneTaskAdd} />} label="Feito" />
                                 </form>
                                 <div className={styles.containerButtons}>
-                                    <button type='submit' onClick={handleCloseModalAdd}>
+                                    <button type='submit' onClick={handleAddTask}>
                                         Adicionar
                                     </button>
                                 </div>
