@@ -13,14 +13,15 @@ import Modal from '../../components/modalAdd'
 import { Checkbox, FormControlLabel } from '@mui/material';
 import { Button } from '../../components/ui/Button'
 import { toast } from 'react-toastify'
+import formatUTCDate from '../../utils/formatDate'
 
 export type TaskProps = {
     id: string
     title: string
     description: string
     done: boolean
-    creted_at: Date
-    updated_at: Date
+    created_at: string
+    updated_at: string
     user_id: string
 }
 
@@ -63,6 +64,7 @@ export default function Dashboard({ tasks }: HomeProps) {
             setDoneTaskAdd(false)
             setLoading(false)
             handleCloseModalAdd()
+            handleRefreshTasks()
         } catch (err) {
             toast.error('Ops erro ao cadastrar tarefa.')
             setLoading(false)
@@ -139,6 +141,19 @@ export default function Dashboard({ tasks }: HomeProps) {
                                 Nenhuma tarefa aberto foi encontrado...
                             </span>
                         )}
+                        {taskList.map((task) => (
+                            <div className={styles.containerTask} key={task.id}>
+                                <div className={styles.containerTaskHeader}>
+                                    <h3>{task.title}</h3>
+                                    <span>{task.done ? 'Feito' : 'Não feito'}</span>
+                                </div>
+                                <p>{task.description}</p>
+                                <div className={styles.containerTaskFooter}>
+                                    <span>{task.updated_at}</span>
+                                    <span>{task.created_at}</span>
+                                </div>
+                            </div>
+                        ))}
                     </article>
                 </main>
             </div >
