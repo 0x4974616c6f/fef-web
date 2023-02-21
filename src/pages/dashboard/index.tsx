@@ -2,18 +2,14 @@ import { useState } from 'react'
 import { canSSRAuth } from '../../utils/canSSRAuth'
 import Head from 'next/head'
 import styles from './styles.module.scss'
-
 import { Header } from '../../components/Header'
-
 import { FiRefreshCcw, FiPlus } from 'react-icons/fi'
-
 import { setupAPIClient } from '../../services/api'
-
 import Modal from '../../components/modalAdd'
 import { Checkbox, FormControlLabel } from '@mui/material';
 import { Button } from '../../components/ui/Button'
 import { toast } from 'react-toastify'
-import formatUTCDate from '../../utils/formatDate'
+import TaskList from '../../components/tasklist'
 
 export type TaskProps = {
     id: string
@@ -136,24 +132,13 @@ export default function Dashboard({ tasks }: HomeProps) {
                         </Modal>
                     </div>
                     <article className={styles.listOrders}>
-                        {taskList.length === 0 && (
+                        {taskList.length === 0 ? (
                             <span className={styles.emptyList}>
                                 Nenhuma tarefa aberto foi encontrado...
                             </span>
+                        ) : (
+                            <TaskList tasks={taskList} />
                         )}
-                        {taskList.map((task) => (
-                            <div className={styles.containerTask} key={task.id}>
-                                <div className={styles.containerTaskHeader}>
-                                    <h3>{task.title}</h3>
-                                    <span>{task.done ? 'Feito' : 'Não feito'}</span>
-                                </div>
-                                <p>{task.description}</p>
-                                <div className={styles.containerTaskFooter}>
-                                    <span>{task.updated_at}</span>
-                                    <span>{task.created_at}</span>
-                                </div>
-                            </div>
-                        ))}
                     </article>
                 </main>
             </div >
