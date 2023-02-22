@@ -26,8 +26,8 @@ export function Header() {
     }]
     const { signOut } = useContext(AuthContext)
     const [windowSize, setWindowSize] = useState<IWindowsSize>({
-        height: 0,
-        width: 0,
+        height: window.innerHeight,
+        width: window.innerWidth,
     });
     const [menu, setMenu] = useState<boolean>(false)
 
