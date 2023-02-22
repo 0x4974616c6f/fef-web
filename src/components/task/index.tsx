@@ -1,18 +1,32 @@
-import React, { useEffect, useState } from 'react'
-import styles from './styles.module.scss'
+import { AiFillEdit } from 'react-icons/ai';
+import { MdDelete } from 'react-icons/md';
 import { TaskProps } from '../../pages/dashboard';
+import { api } from '../../services/apiClient';
 import { formatDate } from '../../utils/formatDate';
-import { setupAPIClient } from '../../services/api';
+import styles from './styles.module.scss';
 
-const Task = ({ id, title, description, done, created_at, updated_at, user_id, user_name }: TaskProps) => {
+interface TaskPropsComponent {
+    task: TaskProps
+    onFetchRemove: () => void
+}
+
+const Task = ({ task ,onFetchRemove }: TaskPropsComponent) => {
+    const removeTask = async () => {
+        if (window.confirm('Deseja realmente excluir esta tarefa?')) {
+            await api.delete(`/tasks/${task._id}`)
+            onFetchRemove()
+        }
+    }
     return (
-        <div className={`${styles.task} ${done ? styles.done : ''}`}>
-            <h3>{title}</h3>
-            <h5>{description}</h5>
+        <div className={`${styles.task} ${task.done ? styles.done : ''}`}>
+            <h3>{task.title}</h3>
+            <h5>{task.description}</h5>
+            <MdDelete onClick={removeTask}  className={styles.delete} size={20}  />
+            <AiFillEdit className={styles.edit} size={20}  />
             <div className={styles.metadata}>
-                <span>Criado em: {formatDate(created_at)}</span>
-                <span>Atualizado em: {formatDate(updated_at)}</span>
-                <span>Criado por: {user_name}</span>
+                <span>Criado em: {formatDate(task.created_at)}</span>
+                <span>Atualizado em: {formatDate(task.updated_at)}</span>
+                <span>Criado por: {task.user_name}</span>
             </div>
         </div>
     );

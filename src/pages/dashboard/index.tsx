@@ -1,18 +1,17 @@
-import { useEffect, useState } from 'react'
-import { canSSRAuth } from '../../utils/canSSRAuth'
+import { Checkbox, FormControlLabel } from '@mui/material'
 import Head from 'next/head'
-import styles from './styles.module.scss'
-import { Header } from '../../components/Header'
-import { FiRefreshCcw, FiPlus } from 'react-icons/fi'
-import { setupAPIClient } from '../../services/api'
-import Modal from '../../components/modalAdd'
-import { Checkbox, FormControlLabel } from '@mui/material';
-import { Button } from '../../components/ui/Button'
+import { useEffect, useState } from 'react'
+import { FiPlus, FiRefreshCcw } from 'react-icons/fi'
 import { toast } from 'react-toastify'
+import { Header } from '../../components/Header'
+import Modal from '../../components/modalAdd'
 import TaskList from '../../components/tasklist'
+import { setupAPIClient } from '../../services/api'
+import { canSSRAuth } from '../../utils/canSSRAuth'
+import styles from './styles.module.scss'
 
 export type TaskProps = {
-    id: string
+    _id: string
     title: string
     description: string
     done: boolean
@@ -146,7 +145,7 @@ export default function Dashboard({ tasks }: HomeProps) {
                                 Nenhuma tarefa aberto foi encontrado...
                             </span>
                         ) : (
-                            <TaskList tasks={taskList} />
+                            <TaskList onFetchData={handleRefreshTasks} tasks={taskList} />
                         )}
                     </article>
                 </main>
