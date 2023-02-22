@@ -9,9 +9,13 @@ import styles from "./styles.module.scss";
 interface TaskPropsComponent {
   task: TaskProps;
   onFetchRemove: () => void;
+  handleModal: (id: string) => void;
 }
 
-const Task = ({ task, onFetchRemove }: TaskPropsComponent) => {
+const Task = ({ task, onFetchRemove, handleModal }: TaskPropsComponent) => {
+  const editTask = () => {
+    handleModal(task._id);
+  };
   const changeDone = async () => {
     await api.put(`/tasks/done/${task._id}`, {
       done: !task.done,
@@ -35,7 +39,7 @@ const Task = ({ task, onFetchRemove }: TaskPropsComponent) => {
         color={task.done ? "#2ECC40" : "#FF4136"}
       />
       <MdDelete onClick={removeTask} className={styles.delete} size={20} />
-      <AiFillEdit className={styles.edit} size={20} />
+      <AiFillEdit onClick={editTask} className={styles.edit} size={20} />
       <div className={styles.metadata}>
         <span>Criado em: {formatDate(task.created_at)}</span>
         <span>Atualizado em: {formatDate(task.updated_at)}</span>
