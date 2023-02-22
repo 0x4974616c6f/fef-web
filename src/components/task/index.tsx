@@ -10,7 +10,7 @@ const Task = ({ id, title, description, done, created_at, updated_at, user_id }:
     return (
         <div className={`${styles.task} ${done ? styles.done : ''}`}>
             <h3>{title}</h3>
-            <p>{description}</p>
+            <h5>{description}</h5>
             <div className={styles.metadata}>
                 <span>Criado em: {formatDate(created_at)}</span>
                 <span>Atualizado em: {formatDate(updated_at)}</span>

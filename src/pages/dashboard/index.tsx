@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { canSSRAuth } from '../../utils/canSSRAuth'
 import Head from 'next/head'
 import styles from './styles.module.scss'
@@ -35,6 +35,14 @@ export default function Dashboard({ tasks }: HomeProps) {
 
     const [taskList, setTaskList] = useState<TaskProps[]>(tasks || [])
     const [showModalAdd, setShowModalAdd] = useState<boolean>(false)
+    const [hydrated, setHydrated] = useState<boolean>(false)
+
+    useEffect(() => {
+        setHydrated(true)
+    }, [])
+    if (!hydrated) {
+        return null
+    }
 
     async function handleAddTask() {
         // e.preventDefault()
