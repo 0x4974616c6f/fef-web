@@ -1,4 +1,3 @@
-import { Checkbox, FormControlLabel } from "@mui/material";
 import Head from "next/head";
 import { useEffect, useState } from "react";
 import { FiPlus, FiRefreshCcw } from "react-icons/fi";
@@ -45,11 +44,21 @@ export default function Dashboard({ tasks }: HomeProps) {
   }
 
   const handleCloseEditModal = () => {
+    setTitleTaskAdd("");
+    setDescriptionTaskAdd("");
+    setDoneTaskAdd(false);
     setShowEditModal(!showEditModal);
   };
 
   const handleModal = (id: string) => {
     setEditId(id);
+    taskList.forEach((task) => {
+      if (task._id === id) {
+        setTitleTaskAdd(task.title);
+        setDescriptionTaskAdd(task.description);
+        setDoneTaskAdd(task.done);
+      }
+    });
     setShowEditModal(!showEditModal);
   };
 
@@ -133,6 +142,9 @@ export default function Dashboard({ tasks }: HomeProps) {
   }
 
   function handleCloseModalAdd() {
+    setTitleTaskAdd("");
+    setDescriptionTaskAdd("");
+    setDoneTaskAdd(false);
     setShowModalAdd(false);
   }
 
@@ -181,7 +193,7 @@ export default function Dashboard({ tasks }: HomeProps) {
                     onChange={handleDescriptionTaskAdd}
                     placeholder="Digite a descrição da tarefa"
                   />
-                  <FormControlLabel
+                  {/* <FormControlLabel
                     control={
                       <Checkbox
                         onChange={handleDoneTaskAdd}
@@ -189,7 +201,7 @@ export default function Dashboard({ tasks }: HomeProps) {
                       />
                     }
                     label="Feito"
-                  />
+                  /> */}
                 </form>
                 <div className={styles.containerButtons}>
                   <button type="submit" onClick={handleEditTask}>
@@ -215,7 +227,7 @@ export default function Dashboard({ tasks }: HomeProps) {
                     onChange={handleDescriptionTaskAdd}
                     placeholder="Digite a descrição da tarefa"
                   />
-                  <FormControlLabel
+                  {/* <FormControlLabel
                     control={
                       <Checkbox
                         onChange={handleDoneTaskAdd}
@@ -223,7 +235,7 @@ export default function Dashboard({ tasks }: HomeProps) {
                       />
                     }
                     label="Feito"
-                  />
+                  /> */}
                 </form>
                 <div className={styles.containerButtons}>
                   <button type="submit" onClick={handleAddTask}>
