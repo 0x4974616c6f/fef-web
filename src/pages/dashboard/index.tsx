@@ -25,6 +25,7 @@ interface HomeProps {
 }
 
 export default function Dashboard({ tasks }: HomeProps) {
+  const [menuActive, setMenuActive] = useState<boolean>(false);
   const [editId, setEditId] = useState<string>("");
   const [showEditModal, setShowEditModal] = useState<boolean>(false);
   const [titleTaskAdd, setTitleTaskAdd] = useState<string>("");
@@ -42,6 +43,10 @@ export default function Dashboard({ tasks }: HomeProps) {
   if (!hydrated) {
     return null;
   }
+
+  const changeMenuActive = () => {
+    setMenuActive(!menuActive);
+  };
 
   const handleCloseEditModal = () => {
     setTitleTaskAdd("");
@@ -162,7 +167,7 @@ export default function Dashboard({ tasks }: HomeProps) {
         <title>Ferrinox - Lista De Tarefas</title>
       </Head>
       <div>
-        <Header />
+        <Header changeMenuActive={changeMenuActive} />
 
         <main className={styles.container}>
           <div className={styles.containerHeader}>
@@ -248,15 +253,15 @@ export default function Dashboard({ tasks }: HomeProps) {
           <article className={styles.listOrders}>
             {taskList.length === 0 ? (
               <span className={styles.emptyList}>
-                Nenhuma tarefa aberto foi encontrado...
+                Nenhuma tarefa aberta foi encontrada...
               </span>
-            ) : (
+            ) : menuActive !== true ? (
               <TaskList
                 handleModal={handleModal}
                 onFetchData={handleRefreshTasks}
                 tasks={taskList}
               />
-            )}
+            ) : null}
           </article>
         </main>
       </div>
