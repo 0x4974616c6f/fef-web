@@ -1,18 +1,33 @@
 .container {
-    max-width: 120rem;
-    margin: 0 auto;
-    margin-left: 30px;
-    transition: all 300ms ease-in-out;
+  max-width: 720px;
+  margin: 4rem auto;
+  padding: 0 2rem;
+  display: flex;
+  flex-direction: column;
+
+  h1 {
+    color: var(--white);
+  }
 }
 
-.productsList {
-    display: grid;
-    grid-template-columns: repeat(8, 1fr);
-    gap: 3.0rem;
-    counter-reset: grid-counter;
+.containerHeader {
+  display: flex;
+  flex-direction: row;
+
+  button {
+    background-color: transparent;
+    border: 0;
+    margin-left: 1rem;
+  }
 }
 
-.productImg {
-    object-fit: cover;
-    border-radius: 10px;
+.listOrders {
+  display: flex;
+  flex-direction: column;
+  margin: 1rem 0;
+}
+
+.emptyList {
+  font-size: 1.2rem;
+  color: var(--gray-100);
 }
