@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useLayoutEffect, useState } from "react";
 import styles from "./styles.module.scss";
 
 import { FiLogOut, FiMenu } from "react-icons/fi";
@@ -24,9 +24,10 @@ export function Header({ changeMenuActive }: IHeadData) {
     },
   ];
   const { signOut } = useContext(AuthContext);
+
   const [windowSize, setWindowSize] = useState<IWindowsSize>({
-    height: window.innerHeight,
-    width: window.innerWidth,
+    height: 0,
+    width: 0,
   });
   const [menu, setMenu] = useState<boolean>(false);
 
@@ -46,6 +47,17 @@ export function Header({ changeMenuActive }: IHeadData) {
     window.addEventListener("resize", handleResize);
 
     return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  useLayoutEffect(() => {
+    function handleResize() {
+      setWindowSize({
+        width: window.innerWidth,
+        height: window.innerHeight,
+      });
+    }
+
+    handleResize();
   }, []);
 
   return (
