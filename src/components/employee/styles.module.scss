@@ -1,0 +1,57 @@
+.container {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  padding: 10px 10px 0px 10px;
+  position: relative;
+  transition: all 0.3s ease;
+
+  &:hover {
+    border-color: #000;
+    cursor: pointer;
+    transition: all 0.8s ease;
+  }
+
+  h4 {
+    font-size: 14px;
+    margin-bottom: 10px;
+  }
+
+  .delete {
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    right: 0;
+    color: #000;
+    margin-top: 10px;
+    margin-right: 10px;
+    transition: all 0.3s ease;
+
+    &:hover {
+      color: red;
+      transition: all 0.8s ease;
+    }
+  }
+
+  .metadata {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+    color: #999;
+    margin-bottom: 10px;
+
+    span {
+      margin-right: 5px;
+    }
+  }
+
+  .photo_and_fullName {
+    display: flex;
+    align-items: center;
+    padding-bottom: 10px;
+    h3 {
+      padding-left: 10px;
+    }
+  }
+}
