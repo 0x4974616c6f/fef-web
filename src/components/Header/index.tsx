@@ -19,6 +19,10 @@ interface IHeadData {
 export function Header({ changeMenuActive }: IHeadData) {
   const headData = [
     {
+      name: "Tarefas",
+      link: "/dashboard",
+    },
+    {
       name: "Funcionários",
       link: "/funcionarios",
     },

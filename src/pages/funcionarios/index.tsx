@@ -73,18 +73,20 @@ export default function Product({ employees }: EmployeeProps) {
               <FiPlus size={25} color="#3fffa3" />
             </button>
           </div>
-          <article className={styles.listOrders}>
-            {employeesData.length === 0 ? (
-              <span className={styles.emptyList}>
-                Nenhum funcionário foi cadastrado...
-              </span>
-            ) : (
-              <EmployeeList
-                employees={employeesData}
-                onFetchData={handleRefreshEmployees}
-              />
-            )}
-          </article>
+          {!menuActive && (
+            <article className={styles.listOrders}>
+              {employeesData.length === 0 ? (
+                <span className={styles.emptyList}>
+                  Nenhum funcionário foi cadastrado...
+                </span>
+              ) : (
+                <EmployeeList
+                  employees={employeesData}
+                  onFetchData={handleRefreshEmployees}
+                />
+              )}
+            </article>
+          )}
         </main>
       </div>
     </>
