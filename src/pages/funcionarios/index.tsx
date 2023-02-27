@@ -15,7 +15,7 @@ export type EmployeeType = {
   reasonForTheDismissal: string;
   createdAt: string;
   position: string;
-  photo: string;
+  photo: string | ArrayBuffer;
   phone: string;
   performanceEvaluations: number;
   fullName: string;
