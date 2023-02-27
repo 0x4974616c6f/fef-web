@@ -5,6 +5,7 @@ import styles from "./styles.module.scss";
 import { FiLogOut, FiMenu } from "react-icons/fi";
 import { GiCancel } from "react-icons/gi";
 
+import Image from "next/image";
 import { AuthContext } from "../../contexts/AuthContext";
 
 interface IWindowsSize {
@@ -60,15 +61,17 @@ export function Header({ changeMenuActive }: IHeadData) {
         height: window.innerHeight,
       });
     }
-
-    handleResize();
+    if (typeof window !== "undefined") {
+      handleResize();
+    }
   }, []);
 
   return (
     <header className={styles.headerContainer}>
       <div className={styles.headerContent}>
         <Link href="/dashboard">
-          <img src="./logo.svg" width={190} height={60} />
+          {/* <img src="" width={190} height={60} /> */}
+          <Image src="/logo.svg" width={190} height={60} />
         </Link>
 
         {windowSize.width > 768 ? (
