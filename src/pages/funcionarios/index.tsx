@@ -1,4 +1,5 @@
 import Head from "next/head";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { FiPlus, FiRefreshCcw } from "react-icons/fi";
 import EmployeeList from "../../components/employeelist";
@@ -8,13 +9,13 @@ import { canSSRAuth } from "../../utils/canSSRAuth";
 import styles from "./styles.module.scss";
 
 export type EmployeeType = {
-  _id: string;
+  id: string;
   updatedAt: string;
   salary: number;
   reasonForTheDismissal: string;
   createdAt: string;
   position: string;
-  photo: string;
+  photo: string | ArrayBuffer;
   phone: string;
   performanceEvaluations: number;
   fullName: string;
@@ -29,7 +30,8 @@ interface EmployeeProps {
   employees: EmployeeType[];
 }
 
-export default function Product({ employees }: EmployeeProps) {
+export default function EmployeesPage({ employees }: EmployeeProps) {
+  const router = useRouter();
   const [menuActive, setMenuActive] = useState<boolean>(false);
   const [employeesData, setEmployeesData] = useState<EmployeeType[]>(
     employees || []
@@ -46,7 +48,9 @@ export default function Product({ employees }: EmployeeProps) {
     setEmployeesData(response.data);
   };
 
-  const handleAddPage = () => {};
+  const handleAddPage = () => {
+    router.push("/funcionarios/criar");
+  };
 
   useEffect(() => {
     setHydrated(true);

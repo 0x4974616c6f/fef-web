@@ -18,7 +18,7 @@ const TaskList = ({ tasks, onFetchData, handleModal }: TaskListProps) => {
         <Task
           handleModal={handleModalTaskList}
           onFetchRemove={onFetchData}
-          key={task._id}
+          key={task.id}
           task={task}
         />
       ))}

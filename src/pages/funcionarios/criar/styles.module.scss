@@ -1,0 +1,26 @@
+.container {
+  max-width: 720px;
+  margin: 4rem auto;
+  padding: 0 2rem;
+  display: flex;
+  flex-direction: column;
+
+  h1 {
+    color: var(--white);
+  }
+}
+
+.containerHeader {
+  display: flex;
+  flex-direction: row;
+  padding-bottom: 1rem;
+
+  button {
+    background-color: transparent;
+    border: 0;
+    margin-left: 1rem;
+  }
+}
+
+.containerForm {
+}

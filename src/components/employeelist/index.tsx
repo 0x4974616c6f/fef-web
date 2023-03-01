@@ -12,7 +12,7 @@ const EmployeeList = ({ employees, onFetchData }: EmployeeListProps) => {
     <div className={styles.employeeList}>
       {employees.map((employee, index) => (
         <Employee
-          key={employee._id}
+          key={employee.id}
           employee={employee}
           onFetchRemove={onFetchData}
         />
