@@ -1,9 +1,9 @@
-import { createContext, ReactNode, useEffect, useState } from "react";
+import { createContext, ReactNode, useState } from "react";
 
 import { api } from "../services/apiClient";
 
 import Router from "next/router";
-import { destroyCookie, parseCookies, setCookie } from "nookies";
+import { destroyCookie, setCookie } from "nookies";
 
 import { toast } from "react-toastify";
 
@@ -48,33 +48,34 @@ export function signOut() {
 }
 
 export function AuthProvider({ children }: AuthProviderProps) {
-  useEffect(() => {
-    const { "@nextauth.token": token } = parseCookies();
+  // useEffect(() => {
+  //   const { "@nextauth.token": token } = parseCookies();
 
-    if (token) {
-      api
-        .get("/me")
-        .then((response) => {
-          const { id, name, email } = response.data;
+  //   if (token) {
+  //     console.log();
+  //     api
+  //       .get("/users/me")
+  //       .then((response) => {
+  //         const { id, name, email } = response.data;
 
-          setUser({
-            id,
-            fullName: name,
-            email,
-          });
-        })
-        .catch(() => {
-          signOut();
-        });
-    }
-  }, []);
+  //         setUser({
+  //           id,
+  //           name,
+  //           email,
+  //         });
+  //       })
+  //       .catch(() => {
+  //         signOut();
+  //       });
+  //   }
+  // }, []);
 
   const [user, setUser] = useState<UserProps>();
   const isAuthenticated = !!user;
 
   async function signIn({ email, password }: SignInProps) {
     try {
-      const response = await api.post("/session", {
+      const response = await api.post("/auth/login", {
         email,
         password,
       });
@@ -88,7 +89,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
       setUser({
         id,
-        fullName: name,
+        name,
         email,
       });
 
@@ -105,10 +106,11 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   async function signUp({ name, email, password }: SignUpProps) {
     try {
-      const response = await api.post("/users", {
+      const response = await api.post("/auth/register", {
         name,
         email,
         password,
+        admin: true,
       });
 
       toast.success("Conta criada com sucesso");

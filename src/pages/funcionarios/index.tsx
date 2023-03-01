@@ -9,7 +9,7 @@ import { canSSRAuth } from "../../utils/canSSRAuth";
 import styles from "./styles.module.scss";
 
 export type EmployeeType = {
-  _id: string;
+  id: string;
   updatedAt: string;
   salary: number;
   reasonForTheDismissal: string;

@@ -10,18 +10,23 @@ import { canSSRAuth } from "../../utils/canSSRAuth";
 import styles from "./styles.module.scss";
 
 export type TaskProps = {
-  _id: string;
+  id: number;
   title: string;
   description: string;
   done: boolean;
-  created_at: string;
-  updated_at: string;
-  user_id: string;
-  user_name: string;
+  createdAt: Date;
+  updatedAt: Date;
+  userId: number;
 };
 
 interface HomeProps {
   tasks: TaskProps[];
+}
+
+interface EditModal {
+  title?: string;
+  description?: string;
+  done?: boolean;
 }
 
 export default function Dashboard({ tasks }: HomeProps) {
@@ -58,7 +63,7 @@ export default function Dashboard({ tasks }: HomeProps) {
   const handleModal = (id: string) => {
     setEditId(id);
     taskList.forEach((task) => {
-      if (task._id === id) {
+      if (task.id === Number(id)) {
         setTitleTaskAdd(task.title);
         setDescriptionTaskAdd(task.description);
         setDoneTaskAdd(task.done);
@@ -70,19 +75,19 @@ export default function Dashboard({ tasks }: HomeProps) {
   const handleEditTask = async () => {
     try {
       setLoading(true);
-      const data = new FormData();
+      const data: EditModal = {};
 
       if (titleTaskAdd !== "") {
-        data.append("title", titleTaskAdd);
+        data.title = titleTaskAdd;
       }
       if (descriptionTaskAdd !== "") {
-        data.append("description", descriptionTaskAdd);
+        data.description = descriptionTaskAdd;
       }
-      data.append("done", String(doneTaskAdd));
+      data.done = doneTaskAdd;
 
       const apiClient = setupAPIClient();
 
-      await apiClient.put(`/tasks/${editId}`, data);
+      await apiClient.patch(`/tasks/${editId}`, data);
       toast.success("Tarefa editada com sucesso.");
 
       setTitleTaskAdd("");
@@ -102,18 +107,23 @@ export default function Dashboard({ tasks }: HomeProps) {
 
     try {
       setLoading(true);
-      const data = new FormData();
+      // const data = new FormData();
 
       if (titleTaskAdd === "" || descriptionTaskAdd === "") {
         toast.error("Preencha todos os campos");
         return;
       }
 
-      data.append("title", titleTaskAdd);
-      data.append("description", descriptionTaskAdd);
-      data.append("done", String(doneTaskAdd));
+      // data.append("title", titleTaskAdd);
+      // data.append("description", descriptionTaskAdd);
+      // data.append("done", String(doneTaskAdd));
       const apiClient = setupAPIClient();
-      await apiClient.post("/tasks", data);
+      await apiClient.post("/tasks", {
+        title: titleTaskAdd,
+        description: descriptionTaskAdd,
+        done: doneTaskAdd,
+      });
+      // await apiClient.post("/tasks", data);
       toast.success("Tarefa adicionada com sucesso.");
 
       setTitleTaskAdd("");
@@ -156,7 +166,7 @@ export default function Dashboard({ tasks }: HomeProps) {
   async function handleRefreshTasks() {
     const apiClient = setupAPIClient();
 
-    const response = await apiClient.get("/tasks/all");
+    const response = await apiClient.get("/tasks");
 
     setTaskList(response.data);
   }
@@ -271,7 +281,7 @@ export default function Dashboard({ tasks }: HomeProps) {
 
 export const getServerSideProps = canSSRAuth(async (ctx) => {
   const apiClient = setupAPIClient(ctx);
-  const response = await apiClient.get("/tasks/all");
+  const response = await apiClient.get("/tasks");
   return {
     props: {
       tasks: response.data,

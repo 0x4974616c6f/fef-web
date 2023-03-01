@@ -14,7 +14,7 @@ interface EmployeePropsComponent {
 const Employee = ({ employee, onFetchRemove }: EmployeePropsComponent) => {
   const removeEmployee = async () => {
     if (window.confirm("Deseja realmente excluir esse funcionário ?")) {
-      await api.delete(`/employees/${employee._id}`);
+      await api.delete(`/employees/${employee.id}`);
       onFetchRemove();
     }
   };
