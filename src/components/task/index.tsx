@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { AiFillEdit } from "react-icons/ai";
 import { IoCheckmarkDoneCircleSharp } from "react-icons/io5";
 import { MdDelete } from "react-icons/md";
@@ -14,28 +13,18 @@ interface TaskPropsComponent {
 }
 
 const Task = ({ task, onFetchRemove, handleModal }: TaskPropsComponent) => {
-  const [user, setUser] = useState<string>("");
-  const getUserName = async (id: string) => {
-    const user = await api.get(`/users/${id}`);
-    setUser(user.data.name);
-  };
-
-  useEffect(() => {
-    getUserName(String(task.userId));
-  });
-
   const editTask = () => {
-    handleModal(String(task.id));
+    handleModal(String(task._id));
   };
   const changeDone = async () => {
-    await api.put(`/tasks/done/${task.id}`, {
+    await api.put(`/tasks/done/${task._id}`, {
       done: !task.done,
     });
     onFetchRemove();
   };
   const removeTask = async () => {
     if (window.confirm("Deseja realmente excluir esta tarefa?")) {
-      await api.delete(`/tasks/${task.id}`);
+      await api.delete(`/tasks/${task._id}`);
       onFetchRemove();
     }
   };
@@ -52,9 +41,9 @@ const Task = ({ task, onFetchRemove, handleModal }: TaskPropsComponent) => {
       <MdDelete onClick={removeTask} className={styles.delete} size={20} />
       <AiFillEdit onClick={editTask} className={styles.edit} size={20} />
       <div className={styles.metadata}>
-        <span>Criado em: {formatDate(String(task.createdAt))}</span>
-        <span>Atualizado em: {formatDate(String(task.updatedAt))}</span>
-        <span>Criado por: {user}</span>
+        <span>Criado em: {formatDate(String(task.created_at))}</span>
+        <span>Atualizado em: {formatDate(String(task.updated_at))}</span>
+        <span>Criado por: {task.user_name}</span>
       </div>
     </div>
   );

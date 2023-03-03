@@ -1,9 +1,9 @@
-import { createContext, ReactNode, useState } from "react";
+import { createContext, ReactNode, useEffect, useState } from "react";
 
 import { api } from "../services/apiClient";
 
 import Router from "next/router";
-import { destroyCookie, setCookie } from "nookies";
+import { destroyCookie, parseCookies, setCookie } from "nookies";
 
 import { toast } from "react-toastify";
 
@@ -48,34 +48,34 @@ export function signOut() {
 }
 
 export function AuthProvider({ children }: AuthProviderProps) {
-  // useEffect(() => {
-  //   const { "@nextauth.token": token } = parseCookies();
+  useEffect(() => {
+    const { "@nextauth.token": token } = parseCookies();
 
-  //   if (token) {
-  //     console.log();
-  //     api
-  //       .get("/users/me")
-  //       .then((response) => {
-  //         const { id, name, email } = response.data;
+    if (token) {
+      console.log();
+      api
+        .get("/me")
+        .then((response) => {
+          const { id, name, email } = response.data;
 
-  //         setUser({
-  //           id,
-  //           name,
-  //           email,
-  //         });
-  //       })
-  //       .catch(() => {
-  //         signOut();
-  //       });
-  //   }
-  // }, []);
+          setUser({
+            id,
+            name,
+            email,
+          });
+        })
+        .catch(() => {
+          signOut();
+        });
+    }
+  }, []);
 
   const [user, setUser] = useState<UserProps>();
   const isAuthenticated = !!user;
 
   async function signIn({ email, password }: SignInProps) {
     try {
-      const response = await api.post("/auth/login", {
+      const response = await api.post("/session", {
         email,
         password,
       });
@@ -106,7 +106,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   async function signUp({ name, email, password }: SignUpProps) {
     try {
-      const response = await api.post("/auth/register", {
+      const response = await api.post("/users", {
         name,
         email,
         password,

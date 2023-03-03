@@ -10,13 +10,14 @@ import { canSSRAuth } from "../../utils/canSSRAuth";
 import styles from "./styles.module.scss";
 
 export type TaskProps = {
-  id: number;
+  _id: number;
   title: string;
   description: string;
   done: boolean;
-  createdAt: Date;
-  updatedAt: Date;
-  userId: number;
+  created_at: Date;
+  updated_at: Date;
+  user_id: String;
+  user_name: String;
 };
 
 interface HomeProps {
@@ -63,7 +64,7 @@ export default function Dashboard({ tasks }: HomeProps) {
   const handleModal = (id: string) => {
     setEditId(id);
     taskList.forEach((task) => {
-      if (task.id === Number(id)) {
+      if (task._id === Number(id)) {
         setTitleTaskAdd(task.title);
         setDescriptionTaskAdd(task.description);
         setDoneTaskAdd(task.done);
@@ -87,7 +88,7 @@ export default function Dashboard({ tasks }: HomeProps) {
 
       const apiClient = setupAPIClient();
 
-      await apiClient.patch(`/tasks/${editId}`, data);
+      await apiClient.put(`/tasks/${editId}`, data);
       toast.success("Tarefa editada com sucesso.");
 
       setTitleTaskAdd("");
@@ -166,7 +167,7 @@ export default function Dashboard({ tasks }: HomeProps) {
   async function handleRefreshTasks() {
     const apiClient = setupAPIClient();
 
-    const response = await apiClient.get("/tasks");
+    const response = await apiClient.get("/tasks/all");
 
     setTaskList(response.data);
   }
@@ -281,7 +282,7 @@ export default function Dashboard({ tasks }: HomeProps) {
 
 export const getServerSideProps = canSSRAuth(async (ctx) => {
   const apiClient = setupAPIClient(ctx);
-  const response = await apiClient.get("/tasks");
+  const response = await apiClient.get("/tasks/all");
   return {
     props: {
       tasks: response.data,

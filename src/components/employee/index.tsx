@@ -14,7 +14,7 @@ interface EmployeePropsComponent {
 const Employee = ({ employee, onFetchRemove }: EmployeePropsComponent) => {
   const removeEmployee = async () => {
     if (window.confirm("Deseja realmente excluir esse funcionário ?")) {
-      await api.delete(`/employees/${employee.id}`);
+      await api.delete(`/employees/${employee._id}`);
       onFetchRemove();
     }
   };
@@ -39,15 +39,21 @@ const Employee = ({ employee, onFetchRemove }: EmployeePropsComponent) => {
       )}
       <MdDelete onClick={removeEmployee} className={styles.delete} size={20} />
       <div className={styles.metadata}>
-        <span>Data de nascimento: {formatDate(employee.dateOfBirth)}</span>
-        <span>Data de admissão: {formatDate(employee.dateOfAdmission)}</span>
+        <span>
+          Data de nascimento: {formatDate(String(employee.dateOfBirth))}
+        </span>
+        <span>
+          Data de admissão: {formatDate(String(employee.dateOfAdmission))}
+        </span>
         {employee.dateOfDismissal && (
-          <span>Data de demissão: {formatDate(employee.dateOfDismissal)}</span>
+          <span>
+            Data de demissão: {formatDate(String(employee.dateOfDismissal))}
+          </span>
         )}
       </div>
       <div className={styles.metadata}>
-        <span>Criado em: {formatDate(employee.createdAt)}</span>
-        <span>Atualizado em: {formatDate(employee.updatedAt)}</span>
+        <span>Criado em: {formatDate(String(employee.createdAt))}</span>
+        <span>Atualizado em: {formatDate(String(employee.updatedAt))}</span>
       </div>
     </div>
   );

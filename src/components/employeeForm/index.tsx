@@ -1,31 +1,46 @@
 import { Checkbox } from "@mui/material";
+import { useRouter } from "next/router";
 import React, { useState } from "react";
-import { EmployeeType } from "../../pages/funcionarios";
 import styles from "./styles.module.scss";
 
 interface EmployeeFormProps {
-  onSubmit: (employee: EmployeeType) => void;
+  onSubmit: (employee: EmployeeFormInputs) => void;
+}
+
+export interface EmployeeFormInputs {
+  fullName: string;
+  dateOfBirth: Date;
+  address: string;
+  phone: string;
+  email: string;
+  position: string;
+  salary: number;
+  performanceEvaluations: 0;
+  dateOfAdmission: Date;
+  photo: string | ArrayBuffer;
+  reasonForTheDismissal: string;
 }
 
 const EmployeeForm: React.FC<EmployeeFormProps> = ({ onSubmit }) => {
   const [demitido, setDemitido] = useState<boolean>(false);
-  const [employee, setEmployee] = useState<EmployeeType>({
-    _id: "",
-    address: "",
-    createdAt: "",
-    email: "",
+  const [employee, setEmployee] = useState<EmployeeFormInputs>({
     fullName: "",
+    dateOfBirth: new Date(),
+    address: "",
     phone: "",
-    updatedAt: "",
-    dateOfAdmission: "",
-    dateOfBirth: "",
-    performanceEvaluations: 0,
-    salary: 0,
-    photo: "",
+    email: "",
     position: "",
+    salary: 0,
+    performanceEvaluations: 0,
+    dateOfAdmission: new Date(),
+    photo: "",
     reasonForTheDismissal: "",
-    dateOfDismissal: "",
   });
+  const router = useRouter();
+
+  const handleCancelar = () => {
+    router.back();
+  };
 
   const handleDemitido = () => {
     setDemitido(!demitido);
@@ -102,7 +117,7 @@ const EmployeeForm: React.FC<EmployeeFormProps> = ({ onSubmit }) => {
           type="date"
           id="dateOfBirth"
           name="dateOfBirth"
-          value={employee.dateOfBirth}
+          // value={employee.dateOfBirth}
           onChange={handleChange}
           required
         />
@@ -113,7 +128,7 @@ const EmployeeForm: React.FC<EmployeeFormProps> = ({ onSubmit }) => {
           type="date"
           id="dateOfAdmission"
           name="dateOfAdmission"
-          value={employee.dateOfAdmission}
+          // value={employee.dateOfAdmission}
           onChange={handleChange}
           required
         />
@@ -181,7 +196,7 @@ const EmployeeForm: React.FC<EmployeeFormProps> = ({ onSubmit }) => {
               type="date"
               id="dateOfDismissal"
               name="dateOfDismissal"
-              value={employee.dateOfDismissal}
+              // value={employee.dateOfDismissal}
               onChange={handleChange}
             />
           </div>
@@ -201,7 +216,11 @@ const EmployeeForm: React.FC<EmployeeFormProps> = ({ onSubmit }) => {
         <button className={styles.SubmitButton} type="submit">
           Salvar
         </button>
-        <button className={styles.CancelButton} type="button">
+        <button
+          onClick={handleCancelar}
+          className={styles.CancelButton}
+          type="button"
+        >
           Cancelar
         </button>
       </div>

@@ -9,21 +9,21 @@ import { canSSRAuth } from "../../utils/canSSRAuth";
 import styles from "./styles.module.scss";
 
 export type EmployeeType = {
-  id: string;
-  updatedAt: string;
-  salary: number;
-  reasonForTheDismissal: string;
-  createdAt: string;
-  position: string;
-  photo: string | ArrayBuffer;
-  phone: string;
-  performanceEvaluations: number;
+  createdAt?: Date;
+  updatedAt?: Date;
+  _id: string;
   fullName: string;
-  email: string;
-  dateOfBirth: string;
-  dateOfAdmission: string;
-  dateOfDismissal?: string;
+  dateOfBirth: Date;
   address: string;
+  phone: string;
+  email: string;
+  position: string;
+  salary: number;
+  performanceEvaluations: number;
+  dateOfAdmission: Date;
+  dateOfDismissal?: Date;
+  reasonForTheDismissal?: string;
+  photo: string | ArrayBuffer;
 };
 
 interface EmployeeProps {
