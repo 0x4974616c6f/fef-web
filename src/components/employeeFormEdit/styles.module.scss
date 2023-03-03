@@ -1,0 +1,62 @@
+.form_group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+
+  label {
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+  }
+
+  input {
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 0.25rem;
+    font-size: 1rem;
+
+    &:focus {
+      outline: none;
+      border-color: #0077cc;
+      box-shadow: 0 0 0 0.2rem rgba(0, 119, 204, 0.25);
+    }
+  }
+}
+
+.SubmitButton {
+  padding: 0.5rem;
+  border: none;
+  border-radius: 0.25rem;
+  background-color: #0077cc;
+  color: white;
+  font-size: 1rem;
+
+  &:hover {
+    background-color: #005fa3;
+    cursor: pointer;
+  }
+}
+
+.CancelButton {
+  padding: 0.5rem;
+  border: none;
+  border-radius: 0.25rem;
+  background-color: #dc493a;
+  color: white;
+  font-size: 1rem;
+
+  &:hover {
+    background-color: red;
+    cursor: pointer;
+  }
+}
+
+.containerButtons {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+
+  button {
+    margin-right: 0.5rem;
+  }
+}

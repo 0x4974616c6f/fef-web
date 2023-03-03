@@ -1,31 +1,50 @@
 import { Checkbox } from "@mui/material";
+import { useRouter } from "next/router";
 import React, { useState } from "react";
-import { EmployeeType } from "../../pages/funcionarios";
+import { mongoDateToBrowserDate } from "../../utils/formatDate";
 import styles from "./styles.module.scss";
 
 interface EmployeeFormProps {
-  onSubmit: (employee: EmployeeType) => void;
+  onSubmit: (employee: EmployeeFormInputs) => void;
+  data?: [EmployeeFormInputs];
 }
 
-const EmployeeForm: React.FC<EmployeeFormProps> = ({ onSubmit }) => {
+export interface EmployeeFormInputs {
+  fullName: string;
+  dateOfBirth: Date;
+  address: string;
+  phone: string;
+  email: string;
+  position: string;
+  salary: number;
+  performanceEvaluations: number;
+  dateOfAdmission: Date;
+  photo: string | ArrayBuffer;
+  dateOfDismissal?: Date;
+  reasonForTheDismissal?: string;
+}
+
+const EmployeeFormEdit: React.FC<EmployeeFormProps> = ({ onSubmit, data }) => {
   const [demitido, setDemitido] = useState<boolean>(false);
-  const [employee, setEmployee] = useState<EmployeeType>({
-    _id: "",
-    address: "",
-    createdAt: new Date(),
-    email: "",
-    fullName: "",
-    phone: "",
-    updatedAt: new Date(),
-    dateOfAdmission: new Date(),
-    dateOfBirth: new Date(),
-    performanceEvaluations: 0,
-    salary: 0,
-    photo: "",
-    position: "",
-    reasonForTheDismissal: "",
-    dateOfDismissal: new Date(),
+  const [employee, setEmployee] = useState<EmployeeFormInputs>({
+    fullName: data[0]?.fullName || "",
+    dateOfBirth: data[0]?.dateOfBirth || new Date(),
+    address: data[0]?.address || "",
+    phone: data[0]?.phone || "",
+    email: data[0]?.email || "",
+    position: data[0]?.position || "",
+    salary: data[0]?.salary || 0,
+    performanceEvaluations: data[0]?.performanceEvaluations || 0,
+    dateOfAdmission: data[0]?.dateOfAdmission || new Date(),
+    photo: data[0]?.photo || "",
+    reasonForTheDismissal: data[0]?.reasonForTheDismissal || "",
   });
+
+  const router = useRouter();
+
+  const handleCancelar = () => {
+    router.back();
+  };
 
   const handleDemitido = () => {
     setDemitido(!demitido);
@@ -102,7 +121,7 @@ const EmployeeForm: React.FC<EmployeeFormProps> = ({ onSubmit }) => {
           type="date"
           id="dateOfBirth"
           name="dateOfBirth"
-          // value={employee.dateOfBirth}
+          value={mongoDateToBrowserDate(String(employee.dateOfBirth))}
           onChange={handleChange}
           required
         />
@@ -113,7 +132,7 @@ const EmployeeForm: React.FC<EmployeeFormProps> = ({ onSubmit }) => {
           type="date"
           id="dateOfAdmission"
           name="dateOfAdmission"
-          // value={employee.dateOfAdmission}
+          value={mongoDateToBrowserDate(String(employee.dateOfAdmission))}
           onChange={handleChange}
           required
         />
@@ -181,7 +200,7 @@ const EmployeeForm: React.FC<EmployeeFormProps> = ({ onSubmit }) => {
               type="date"
               id="dateOfDismissal"
               name="dateOfDismissal"
-              // value={employee.dateOfDismissal}
+              value={mongoDateToBrowserDate(String(employee.dateOfDismissal))}
               onChange={handleChange}
             />
           </div>
@@ -201,7 +220,11 @@ const EmployeeForm: React.FC<EmployeeFormProps> = ({ onSubmit }) => {
         <button className={styles.SubmitButton} type="submit">
           Salvar
         </button>
-        <button className={styles.CancelButton} type="button">
+        <button
+          onClick={handleCancelar}
+          className={styles.CancelButton}
+          type="button"
+        >
           Cancelar
         </button>
       </div>
@@ -209,4 +232,4 @@ const EmployeeForm: React.FC<EmployeeFormProps> = ({ onSubmit }) => {
   );
 };
 
-export default EmployeeForm;
+export default EmployeeFormEdit;
