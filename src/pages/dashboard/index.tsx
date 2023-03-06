@@ -63,8 +63,8 @@ export default function Dashboard({ tasks }: HomeProps) {
 
   const handleModal = (id: string) => {
     setEditId(id);
-    taskList.forEach((task) => {
-      if (task._id === Number(id)) {
+    taskList.map((task) => {
+      if (task._id !== Number(id)) {
         setTitleTaskAdd(task.title);
         setDescriptionTaskAdd(task.description);
         setDoneTaskAdd(task.done);

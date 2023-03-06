@@ -20,7 +20,7 @@ const CreateEmployee = ({ employeeGetOne }) => {
 
   const handleSubmit = async (employee: EmployeeFormInputs): Promise<void> => {
     const apiClient = setupAPIClient();
-    await apiClient.post("/employees", employee);
+    await apiClient.put(`/employees/${id}`, employee);
     router.back();
   };
   return (
