@@ -72,9 +72,9 @@ export default function Home() {
               Acessar
             </Button>
           </form>
-          <Link href='/signup'>
+          {/* <Link href='/signup'>
             <a className={styles.text}>Não possui uma conta? Cadastre-se</a>
-          </Link>
+          </Link> */}
         </div>
       </div>
     </>

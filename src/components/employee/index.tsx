@@ -19,6 +19,7 @@ const Employee = ({ employee, onFetchRemove }: EmployeePropsComponent) => {
       onFetchRemove();
     }
   };
+  console.log(employee.photo)
   return (
     <Link href={`/funcionarios/${employee._id}`}>
       <div className={styles.container}>

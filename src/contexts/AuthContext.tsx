@@ -16,7 +16,7 @@ export type AuthContextData = {
 };
 
 type UserProps = {
-  id: string;
+  _id: string;
   name: string;
   email: string;
 };
@@ -56,10 +56,10 @@ export function AuthProvider({ children }: AuthProviderProps) {
       api
         .get("/me")
         .then((response) => {
-          const { id, name, email } = response.data;
+          const { _id, name, email } = response.data;
 
           setUser({
-            id,
+            _id,
             name,
             email,
           });
@@ -80,7 +80,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         password,
       });
 
-      const { id, name, token } = response.data;
+      const { _id, name, token } = response.data;
 
       setCookie(undefined, "@nextauth.token", token, {
         maxAge: 60 * 60 * 24 * 30, // expire in 1 month
@@ -88,7 +88,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
       });
 
       setUser({
-        id,
+        _id,
         name,
         email,
       });
@@ -110,7 +110,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         name,
         email,
         password,
-        admin: true,
+        // admin: true,
       });
 
       toast.success("Conta criada com sucesso");

@@ -7,6 +7,7 @@ import { GiCancel } from "react-icons/gi";
 
 import Image from "next/image";
 import { AuthContext } from "../../contexts/AuthContext";
+import { AdminAuthContext } from "../../contexts/AdminAuthContext";
 
 interface IWindowsSize {
   width: number;
@@ -29,6 +30,7 @@ export function Header({ changeMenuActive }: IHeadData) {
     },
   ];
   const { signOut } = useContext(AuthContext);
+  const { isAdmin } = useContext(AdminAuthContext);
 
   const [windowSize, setWindowSize] = useState<IWindowsSize>({
     height: 0,
@@ -83,6 +85,11 @@ export function Header({ changeMenuActive }: IHeadData) {
                   <a>{item.name}</a>
                 </Link>
               ))}
+              {isAdmin && (
+                <Link href="/admin">
+                  <a>Admin</a>
+                </Link>
+              )}
               <button onClick={signOut}>
                 <FiLogOut color="#3C3A3B" size={24} />
               </button>
@@ -111,6 +118,13 @@ export function Header({ changeMenuActive }: IHeadData) {
                   </Link>
                 </li>
               ))}
+              {isAdmin && (
+                <li>
+                  <Link href="/admin">
+                    <a>Admin</a>
+                  </Link>
+                </li>
+              )}
               <li>
                 <a onClick={signOut}>Sair</a>
               </li>
