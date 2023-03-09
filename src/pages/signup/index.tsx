@@ -1,4 +1,4 @@
-import { useState, FormEvent, useContext } from 'react';
+import { useState, FormEvent, useContext, useEffect } from 'react';
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../../../styles/home.module.scss';
@@ -8,15 +8,32 @@ import { Input } from '../../components/ui/Input'
 import { Button } from '../../components/ui/Button'
 import { AuthContext } from '../../contexts/AuthContext';
 import Link from 'next/link';
+import { AdminAuthContext } from '../../contexts/AdminAuthContext';
+import { useRouter } from 'next/router';
 
 export default function SignUp() {
-  const { signUp } = useContext(AuthContext)
-
+  const { signUp, user } = useContext(AuthContext)
+  const {isAdmin} = useContext(AdminAuthContext)
+  const router = useRouter()
+  const [isLoading, setIsLoading] = useState(true);
   const [ name, setName ] = useState('')
   const [ email, setEmail ] = useState('')
   const [ password, setPassword ] = useState('')
-
   const [ loading, setLoading ] = useState(false)
+
+  useEffect(() => {
+    if (!user) {
+      router.push("/");
+    } else if (!isAdmin) {
+      router.push("/");
+    } else {
+      setIsLoading(false);
+    }
+  }, [user, isAdmin, router]);
+
+  if (isLoading) {
+    return <p>Carregando...</p>;
+  }
 
   async function handleSignUp(event: FormEvent){
     event.preventDefault();

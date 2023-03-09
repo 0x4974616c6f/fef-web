@@ -1,11 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
 import React, { useContext } from "react";
-import { AiOutlineHome } from "react-icons/ai";
+import { AiOutlineHome, AiOutlineLogout } from "react-icons/ai";
 import { FiMail } from "react-icons/fi";
 import { MdDashboard, MdOutlineKeyboardArrowLeft } from "react-icons/md";
 import { TiContacts } from "react-icons/ti";
-import { SidebarContext } from "../SidebarContext";
+import { SidebarContext } from "../../../contexts/SidebarContext";
 import s from "./styles.module.scss";
 
 const sidebarItem = [
@@ -28,7 +28,8 @@ const sidebarItem = [
 ];
 
 const Navigation = () => {
-  const {isCoollapsedSidebar, toggleSidebarCollapsedHandler} = useContext(SidebarContext);
+  const { isCoollapsedSidebar, toggleSidebarCollapsedHandler } =
+    useContext(SidebarContext);
 
   return (
     <div className={s.sidebar_wrapper}>
@@ -58,6 +59,14 @@ const Navigation = () => {
               </Link>
             </li>
           ))}
+          <li className={s.sidebar__item}>
+            <div className={s.sidebar__link}>
+              <span className={s.sidebar__icon}>
+                <AiOutlineLogout />
+              </span>
+              <span className={s.sidebar__name}>Sair</span>
+            </div>
+          </li>
         </ul>
       </aside>
     </div>

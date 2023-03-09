@@ -1,9 +1,9 @@
-import { createContext, ReactNode, useEffect, useState } from "react";
+import { createContext, ReactNode, useContext, useEffect, useState } from "react";
 import { api } from "../services/apiClient";
 import Router from "next/router";
 import { destroyCookie, parseCookies, setCookie } from "nookies";
 import { toast } from "react-toastify";
-import { signOut } from "./AuthContext";
+import { AuthContext } from "./AuthContext";
 
 export type UserPros = {
   _id: string;
@@ -20,6 +20,7 @@ export type AdminAuthContextData = {
 export const AdminAuthContext = createContext({} as AdminAuthContextData);
 
 export function AdminAuthProvider({ children }: { children: ReactNode }) {
+  const { signOut } = useContext(AuthContext)
   const [user, setUser] = useState<UserPros>(null);
   const [isAdmin, setIsAdmin] = useState<boolean>(false);
   useEffect(() => {
@@ -31,7 +32,7 @@ export function AdminAuthProvider({ children }: { children: ReactNode }) {
         .then((response) => {
           const { _id, name, email, admin } = response.data;
           setUser({ _id, name, email, admin });
-          if (!admin) {
+          if (admin === false) {
             signOut();
           }
           setIsAdmin(true);

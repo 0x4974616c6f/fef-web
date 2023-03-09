@@ -68,6 +68,8 @@ export function Header({ changeMenuActive }: IHeadData) {
     }
   }, []);
 
+  console.log(isAdmin)
+
   return (
     <header className={styles.headerContainer}>
       <div className={styles.headerContent}>

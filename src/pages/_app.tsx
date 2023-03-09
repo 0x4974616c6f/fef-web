@@ -5,18 +5,18 @@ import "react-toastify/dist/ReactToastify.css";
 
 import { AuthProvider } from "../contexts/AuthContext";
 import { AdminAuthProvider } from "../contexts/AdminAuthContext";
-import { SidebarProvider } from "../components/admin/SidebarContext";
+import { SidebarProvider } from "../contexts/SidebarContext";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <AuthProvider>
-      <AdminAuthProvider>
+    <AdminAuthProvider>
+      <AuthProvider>
         <SidebarProvider>
           <Component {...pageProps} />
           <ToastContainer autoClose={3000} />
         </SidebarProvider>
-      </AdminAuthProvider>
-    </AuthProvider>
+      </AuthProvider>
+    </AdminAuthProvider>
   );
 }
 
