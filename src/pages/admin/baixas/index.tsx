@@ -1,15 +1,15 @@
 import { Container, Grid } from "@mui/material";
-import Layout from "../../components/admin/Layout";
+import Layout from "../../../components/admin/Layout";
 import s from "./styles.module.scss";
 
-const Admin = () => {
+const Baixas = () => {
   return (
     <Layout>
       <Container className={s.container} maxWidth="xl">
-        <h1>DashBoard</h1>
+        <h1>Baixas</h1>
       </Container>
     </Layout>
   );
 };
 
-export default Admin;
+export default Baixas;

@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { AdminAuthContext } from "../../../contexts/AdminAuthContext";
 import { AuthContext } from "../../../contexts/AuthContext";
 import Navigation from "../menuNavigation";
@@ -14,7 +14,22 @@ function Layout({ children }: Props) {
   const { user } = useContext(AuthContext);
   const { isAdmin } = useContext(AdminAuthContext);
   const [isLoading, setIsLoading] = useState(true);
+  const layoutRef = useRef(null);
 
+  useEffect(() => {
+    function onWheelChange() {
+      const layout = layoutRef.current;
+      layout.classList.add(s.showAnimation);
+      setTimeout(() => layout.classList.remove(s.showAnimation), 1000);
+    }
+
+    const layout = layoutRef.current;
+    if (layout) {
+      layout.addEventListener('wheelchange', onWheelChange);
+
+      return () => layout.removeEventListener('wheelchange', onWheelChange);
+    }
+  }, [layoutRef]);
   useEffect(() => {
     if (!user) {
       router.push("/");
@@ -30,7 +45,7 @@ function Layout({ children }: Props) {
   }
 
   return (
-    <div className={s.layout}>
+    <div className={s.layout} ref={layoutRef}>
       <Navigation />
       {children}
     </div>

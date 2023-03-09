@@ -4,6 +4,7 @@ import React, { useContext } from "react";
 import { AiOutlineHome, AiOutlineLogout } from "react-icons/ai";
 import { FiMail } from "react-icons/fi";
 import { MdDashboard, MdOutlineKeyboardArrowLeft } from "react-icons/md";
+import { BsArrowDown, BsArrowUp } from "react-icons/bs";
 import { TiContacts } from "react-icons/ti";
 import { SidebarContext } from "../../../contexts/SidebarContext";
 import s from "./styles.module.scss";
@@ -16,13 +17,23 @@ const sidebarItem = [
     icon: MdDashboard,
   },
   {
+    name: "Altas",
+    href: "/admin/altas",
+    icon: BsArrowUp,
+  },
+  {
+    name: "Baixas",
+    href: "/admin/baixas",
+    icon: BsArrowDown,
+  },
+  {
     name: "Emails",
-    href: "/emails",
+    href: "/admin/emails",
     icon: FiMail,
   },
   {
     name: "Contatos",
-    href: "/contatos",
+    href: "/admin/contatos",
     icon: TiContacts,
   },
 ];

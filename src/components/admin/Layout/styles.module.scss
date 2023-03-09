@@ -3,3 +3,17 @@
   height: 100vh;
   gap: 2rem;
 }
+
+.showAnimation {
+  animation-name: show;
+  animation-duration: 1s;
+
+  @keyframes show {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+}
