@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { AdminAuthContext } from "../../../contexts/AdminAuthContext";
 import { AuthContext } from "../../../contexts/AuthContext";
+import Loader from "../../Loader";
 import Navigation from "../menuNavigation";
 import s from "./styles.module.scss";
 
@@ -36,12 +37,13 @@ function Layout({ children }: Props) {
     } else if (!isAdmin) {
       router.push("/");
     } else {
+      // router.push("/admin");
       setIsLoading(false);
     }
   }, [user, isAdmin, router]);
 
   if (isLoading) {
-    return <p>Carregando...</p>;
+    return <Loader/>
   }
 
   return (

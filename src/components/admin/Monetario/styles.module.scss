@@ -1,0 +1,43 @@
+.card_item {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #fff;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  margin: 0.5rem 0;
+  position: relative;
+  transition: transform 0.2s ease-out;
+
+  &:hover {
+    transform: translateX(10px);
+  }
+
+  .status_red,
+  .status_green {
+    top: 0;
+    left: 0;
+    width: 1rem;
+    height: 100%;
+    position: absolute;
+    border-bottom-left-radius: 0.5rem;
+    border-top-left-radius: 0.5rem;
+    transition: opacity 0.2s ease-out;
+    &:hover {
+      opacity: 0.7;
+    }
+  }
+
+  .status_red {
+    background-color: red;
+  }
+
+  .status_green {
+    background-color: green;
+  }
+}
+
+.side_left {
+  margin-left: 10px;
+}

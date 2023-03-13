@@ -10,6 +10,7 @@ import { AuthContext } from '../../contexts/AuthContext';
 import Link from 'next/link';
 import { AdminAuthContext } from '../../contexts/AdminAuthContext';
 import { useRouter } from 'next/router';
+import Loader from '../../components/Loader';
 
 export default function SignUp() {
   const { signUp, user } = useContext(AuthContext)
@@ -32,7 +33,7 @@ export default function SignUp() {
   }, [user, isAdmin, router]);
 
   if (isLoading) {
-    return <p>Carregando...</p>;
+    return <Loader />;
   }
 
   async function handleSignUp(event: FormEvent){

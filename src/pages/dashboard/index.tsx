@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { FiPlus, FiRefreshCcw } from "react-icons/fi";
 import { toast } from "react-toastify";
 import { Header } from "../../components/Header";
+import Loader from "../../components/Loader";
 import Modal from "../../components/modalAdd";
 import TaskList from "../../components/tasklist";
 import { setupAPIClient } from "../../services/api";
@@ -170,6 +171,10 @@ export default function Dashboard({ tasks }: HomeProps) {
     const response = await apiClient.get("/tasks/all");
 
     setTaskList(response.data);
+  }
+
+  if (!tasks) {
+    return <Loader />;
   }
 
   return (

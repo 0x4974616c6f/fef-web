@@ -7,7 +7,9 @@ import { MdDashboard, MdOutlineKeyboardArrowLeft } from "react-icons/md";
 import { BsArrowDown, BsArrowUp } from "react-icons/bs";
 import { TiContacts } from "react-icons/ti";
 import { SidebarContext } from "../../../contexts/SidebarContext";
+import { RiMoneyDollarCircleLine } from "react-icons/ri";
 import s from "./styles.module.scss";
+import { useRouter } from "next/router";
 
 const sidebarItem = [
   { name: "Home", href: "/", icon: AiOutlineHome },
@@ -17,14 +19,9 @@ const sidebarItem = [
     icon: MdDashboard,
   },
   {
-    name: "Altas",
-    href: "/admin/altas",
-    icon: BsArrowUp,
-  },
-  {
-    name: "Baixas",
-    href: "/admin/baixas",
-    icon: BsArrowDown,
+    name: "Monetário",
+    href: "/admin/money",
+    icon: RiMoneyDollarCircleLine,
   },
   {
     name: "Emails",
@@ -41,6 +38,11 @@ const sidebarItem = [
 const Navigation = () => {
   const { isCoollapsedSidebar, toggleSidebarCollapsedHandler } =
     useContext(SidebarContext);
+
+  const router = useRouter();
+  const goToHomePage = () => {
+    router.push("/");
+  };
 
   return (
     <div className={s.sidebar_wrapper}>
@@ -71,7 +73,7 @@ const Navigation = () => {
             </li>
           ))}
           <li className={s.sidebar__item}>
-            <div className={s.sidebar__link}>
+            <div className={s.sidebar__link} onClick={goToHomePage}>
               <span className={s.sidebar__icon}>
                 <AiOutlineLogout />
               </span>

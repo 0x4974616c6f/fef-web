@@ -68,7 +68,7 @@ export function Header({ changeMenuActive }: IHeadData) {
     }
   }, []);
 
-  console.log(isAdmin)
+  console.log(isAdmin);
 
   return (
     <header className={styles.headerContainer}>
@@ -122,7 +122,10 @@ export function Header({ changeMenuActive }: IHeadData) {
               ))}
               {isAdmin && (
                 <li>
-                  <Link href="/admin">
+                  <Link
+                    key={isAdmin ? "admin-link" : "other-link"}
+                    href="/admin"
+                  >
                     <a>Admin</a>
                   </Link>
                 </li>
